@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chill Black Music Player</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    select, button {
+      background: #111;
+      color: #fff;
+      border: none;
+      padding: 0.5rem;
+      margin: 0.25rem;
+      font-size: 1rem;
+    }
+    audio {
+      width: 90vw;
+      max-width: 400px;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎧 Black Chill Player</h1>
+  <select id="playlistSelect"></select>
+  <select id="trackSelect"></select>
+  <audio id="audioPlayer" controls></audio>
+
+  <script>
+    const playlists = {
+      "Travis Scott": [
+        { title: "Trance", file: "tracks/travis_trance.mp3" },
+        { title: "My Eyes", file: "tracks/travis_myeyes.mp3" },
+        { title: "Telekinesis", file: "tracks/travis_telekinesis.mp3" }
+      ],
+      "Frank Ocean": [
+        { title: "White Ferrari", file: "tracks/frank_whiteferrari.mp3" },
+        { title: "Pink + White", file: "tracks/frank_pinkwhite.mp3" }
+      ],
+      "PARTYNEXTDOOR": [
+        { title: "Sex on the Beach", file: "tracks/pnd_sexonthebeach.mp3" },
+        { title: "Make it to the Morning", file: "tracks/pnd_makeit.mp3" }
+      ],
+      "Drake": [
+        { title: "Feel No Ways", file: "tracks/drake_feelnoways.mp3" },
+        { title: "Jaded", file: "tracks/drake_jaded.mp3" }
+      ],
+      "Childish Gambino": [
+        { title: "Redbone", file: "tracks/gambino_redbone.mp3" }
+      ],
+      "Laufey": [
+        { title: "From the Start", file: "tracks/laufey_start.mp3" }
+      ],
+      "Daniel Caesar": [
+        { title: "Best Part", file: "tracks/caesar_bestpart.mp3" }
+      ],
+      "Bedabedaó": [
+        { title: "Apple Cider", file: "tracks/beda_applecider.mp3" }
+      ]
+    };
+
+    const playlistSelect = document.getElementById("playlistSelect");
+    const trackSelect = document.getElementById("trackSelect");
+    const audioPlayer = document.getElementById("audioPlayer");
+
+    // Populate playlist dropdown
+    for (let artist in playlists) {
+      let option = document.createElement("option");
+      option.value = artist;
+      option.textContent = artist;
+      playlistSelect.appendChild(option);
+    }
+
+    function updateTracks() {
+      let selectedPlaylist = playlists[playlistSelect.value];
+      trackSelect.innerHTML = "";
+      selectedPlaylist.forEach(track => {
+        let option = document.createElement("option");
+        option.value = track.file;
+        option.textContent = track.title;
+        trackSelect.appendChild(option);
+      });
+      audioPlayer.src = selectedPlaylist[0].file;
+    }
+
+    playlistSelect.addEventListener("change", () => {
+      updateTracks();
+    });
+
+    trackSelect.addEventListener("change", () => {
+      audioPlayer.src = trackSelect.value;
+    });
+
+    // Initial load
+    updateTracks();
+  </script>
+</body>
+</html>
